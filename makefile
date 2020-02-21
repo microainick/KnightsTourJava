@@ -1,10 +1,11 @@
 build:
-	#javac Node.java
+	javac Think.java
 	javac Prompt.java
 	javac Driver.java
-	#javac Show.java
+	javac Show.java
 	javac View.java
-	javac LLnodeInt.java
+	javac LLnode.java
+	javac Brain.java
 	clear
 
 clean:
