@@ -5,7 +5,6 @@ build:
 	javac Show.java
 	javac View.java
 	javac LLnode.java
-	javac Brain.java
 	clear
 
 clean:

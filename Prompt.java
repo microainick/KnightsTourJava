@@ -100,4 +100,34 @@ public class Prompt
     } while (!isValid);
     return inputX;
     }
+
+    public int get_IPV_num()
+    {
+      boolean isValid;
+      String input;
+      int inputNum = 0;
+      Scanner scn = new Scanner(System.in);
+      do
+      {
+        isValid = true;
+        System.out.println("\n\n\nHow many ininitial positions Would you like to Enter?\n\n\n");
+        System.out.println("\nPlease enter a positive integer");
+        input = scn.nextLine();
+        try
+        {
+          inputNum = Integer.parseInt(input);
+          if (inputNum < 1)
+          {
+            isValid = false;
+            System.out.println("Invalid. Try again.");
+          }
+        } // end Try
+        catch (NumberFormatException e)
+        {
+          isValid = false;
+          System.out.println("Invalid. Not a number. Try again.");
+        } //close catch
+      } while (!isValid);
+      return inputNum;
+    }
 }

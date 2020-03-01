@@ -15,13 +15,12 @@ public class LLnode
   LLnode()
   {
     pCoords = null;
-    order_data = 20;
+    order_data = -1;
     tail_LLnode = null;
     int x = 0;
     int y = 0;
     head_bool = false;
     end_bool = false;
-    System.out.println("your fuckin up");
   }
 
   LLnode(Point p, LLnode t)
@@ -31,7 +30,7 @@ public class LLnode
     head_bool = false;
     if (order_data == 63)
     {
-      end_bool = true; //print?
+      end_bool = true;
     }
     else
     {
@@ -77,14 +76,6 @@ public class LLnode
     return order_data;
   }
 
-/*
-  public void set_order_data(int i)
-  {
-    order_data = i;
-  }
-  */
-  //no set method, assignment in constructor only
-
   public String toString()
   {
     return pCoords.toString();
@@ -95,19 +86,10 @@ public class LLnode
     return pCoords;
   }
 
-  //public Boolean hasNextMove(){}
-
   public LLnode get_tail()
   {
     return tail_LLnode;
   }
-
-/*  public void set_tail(LLnode l)
-  {
-
-
-  }
-*/
 
   public int get_x()
   {
@@ -118,28 +100,4 @@ public class LLnode
   {
     return (int)pCoords.getY();
   }
-
-
-/*
-  public LLnode set(LLnode ne)
-  {
-    pCoords.setLocation(ne.get_Point());
-    order_data = ne.get_order_data();
-    head_bool = false;
-    if (order_data == 63)
-    {
-      end_bool = true;
-    }
-    else
-    {
-      end_bool = false;
-    }
-    tail_LLnode = ne;
-    x = (int)pCoords.getX();
-    y = (int)pCoords.getY();
-  }
-
-*/
-
-
 }

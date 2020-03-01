@@ -15,6 +15,10 @@ public class View
   public static final String ANSI_BRIGHT_CYAN   = "\u001B[96m";
   public static final String ANSI_BLINK = "\u001B[5m";
   public static final String RAPID_BLINK = "\u001B[6m";
+  public static final String ANSI_BLACK_BACKGROUND = "\u001B[40m";
+  public static final String BKG_BRIGHT_MAGENTA = "\u001b[45;1m";
+  public static final String ANSI_BRIGHT_MAGENTA = "\u001b[35;1m";
+  public static final String ANSI_BRIGHT_BLUE = "\u001b[34;1m";
 
   public void look(int[][] array)
   {
@@ -43,7 +47,6 @@ public class View
         {
           System.out.printf("%2d ", array[j][i]);
         }
-        //System.out.printf(ANSI_PURPLE + "%5d " + ANSI_RESET, matrx[i][j].getData());
       }
     }
     System.out.println("\n\n");
@@ -76,10 +79,8 @@ public class View
         {
           System.out.printf("%2d ", array[j][i]);
         }
-        //System.out.printf(ANSI_PURPLE + "%5d " + ANSI_RESET, matrx[i][j].getData());
       }
     }
     System.out.println("\n\n");
-  }
-
+  }//end look2
 }

@@ -23,12 +23,8 @@ public class Think
       return false;
   }
 
-
-
-  public LLnode next_move_node(LLnode node_at, int[][] board, View theView, Think theThink, Stack<int[][]> bs, Stack<LLnode> ls)
+  public LLnode next_move_node(LLnode node_at, int[][] board, View theView, Think theThink, Stack<int[][]> bs, Stack<LLnode> ls, Stack<Point> s)
   {
-        System.out.println("\nbs stack size:  " + bs.size());
-        System.out.println("\nls stack size:  " + ls.size());
         int markX;
         int markY;
         int order_count = 1 + node_at.get_order_data();
@@ -37,9 +33,6 @@ public class Think
         int i = (int)p.getX();
         int j = (int)p.getY();
 
-        //above could be two lines, fuck a Point
-
-        //int location = 8;
         if (     0 <= (i-2) && (i-2) < 8 && 0 <= (j+1) && (j+1) < 8 && board[i-2][j+1] == -1) {Next_p.setLocation(p.getX()-2,p.getY()+1);}
         else if (0 <= (i-1) && (i-1) < 8 && 0 <= (j+2) && (j+2) < 8 && board[i-1][j+2] == -1) {Next_p.setLocation(p.getX()-1,p.getY()+2);}
         else if (0 <= (i+1) && (i+1) < 8 && 0 <= (j+2) && (j+2) < 8 && board[i+1][j+2] == -1) {Next_p.setLocation(p.getX()+1,p.getY()+2);}
@@ -50,12 +43,11 @@ public class Think
         else if (0 <= (i-2) && (i-2) < 8 && 0 <= (j-1) && (j-1) < 8 && board[i-2][j-1] == -1) {Next_p.setLocation(p.getX()-2,p.getY()-1);}
         else
         {
-          System.out.println("\n\n\n else has run  \n\n\n");
+          System.out.println("\n\n\n        KNIGHT IS TRAPPED!!            \n\n");
+          System.out.println("No next move from:  " + p.toString());
+          System.out.println("  ... ReCalculating ...  BackTracking w/ the Stack!\n");
+          try{Thread.sleep(600);}catch(InterruptedException e) {}
 
-          System.out.println("No next move from:  " + p.toString() + " probably use get_tail");
-          System.out.println("\nbs stack size:  " + bs.size());
-          System.out.println("\nls stack size:  " + ls.size());
-          System.out.println("\nHopefully no change... if   ");
           markX = node_at.get_x();
           markY = node_at.get_y();
           node_at = new LLnode(node_at.get_tail());
@@ -65,7 +57,6 @@ public class Think
           j = (int)p.getY();
           ls.pop();
           bs.pop();
-          //System.out.println
           board[markX][markY] = -2;
           bs.push(board);
           if (     0 <= (i-2) && (i-2) < 8 && 0 <= (j+1) && (j+1) < 8 && board[i-2][j+1] == -1) {Next_p.setLocation(p.getX()-2,p.getY()+1);}
@@ -77,31 +68,26 @@ public class Think
           else if (0 <= (i-1) && (i-1) < 8 && 0 <= (j-2) && (j-2) < 8 && board[i-1][j-2] == -1) {Next_p.setLocation(p.getX()-1,p.getY()-2);}
           else if (0 <= (i-2) && (i-2) < 8 && 0 <= (j-1) && (j-1) < 8 && board[i-2][j-1] == -1) {Next_p.setLocation(p.getX()-2,p.getY()-1);}
           else{
-            //(LLnode node_at, int[][] board, View theView, Think theThink, Stack<int[][]> bs, Stack<LLnode> ls)
-            System.out.println("check else for this message, in think, next move node, big issue potential.");
-            theThink.next_move_node(node_at, board, theView, theThink, bs, ls);
+            theThink.next_move_node(node_at, board, theView, theThink, bs, ls, s);
           }
           board[markX][markY] = -1;
         }
-        //if (theBrain.hasNextMove(node_at, ))
+
         LLnode next_node = new LLnode(Next_p, node_at);
         ls.push(next_node);
+        s.push(next_node.get_Point());
         int laps = 0;
         laps++;
         board[(int)Next_p.getX()][(int)Next_p.getY()] = 1 + node_at.get_order_data();
         bs.push(board);
         theView.look(board);
         try{Thread.sleep(300);}catch(InterruptedException e) {}
-        //should push
-        //theThink = new theThink;
 
         return next_node;
 
-        //Think theThink = new Think();
   }
 
-//from base
-
+  //from base
   public LLnode find_move(Point p, Driver theDriver, LLnode base, int[][] board, Stack<Point> s, Stack<int[][]> bs, Stack<LLnode> ls)
   {
     int i = (int)p.getX();
@@ -120,7 +106,7 @@ public class Think
     else if (0 <= (i-1) && (i-1) < 8 && 0 <= (j+2) && (j+2) < 8 && board[i-1][j+2] == -1)
     {
       Point p1 = new Point(i-1,j+2);
-      goNode = new LLnode(p1, base); //
+      goNode = new LLnode(p1, base);
       ls.push(goNode);
       board[goNode.get_x()][goNode.get_y()] = goNode.get_order_data();
       bs.push(board);
@@ -129,7 +115,7 @@ public class Think
     else if (0 <= (i+1) && (i+1) < 8 && 0 <= (j+2) && (j+2) < 8 && board[i+1][j+2] == -1)
     {
       Point p2 = new Point(i+1,j+2);
-      goNode = new LLnode(p2, base); //
+      goNode = new LLnode(p2, base);
       ls.push(goNode);
       board[goNode.get_x()][goNode.get_y()] = goNode.get_order_data();
       bs.push(board);
@@ -138,7 +124,7 @@ public class Think
     else if (0 <= (i+2) && (i+2) < 8 && 0 <= (j+1) && (j+1) < 8 && board[i+2][j+1] == -1)
     {
       Point p3 = new Point(i+2,j+1);
-      goNode = new LLnode(p3, base); //
+      goNode = new LLnode(p3, base);
       ls.push(goNode);
       board[goNode.get_x()][goNode.get_y()] = goNode.get_order_data();
       bs.push(board);
@@ -147,7 +133,7 @@ public class Think
     else if (0 <= (i+2) && (i+2) < 8 && 0 <= (j-1) && (j-1) < 8 && board[i+2][j-1] == -1)
     {
       Point p4 = new Point(i+2,j-1);
-      goNode = new LLnode(p4, base); //
+      goNode = new LLnode(p4, base);
       ls.push(goNode);
       board[goNode.get_x()][goNode.get_y()] = goNode.get_order_data();
       bs.push(board);
@@ -156,7 +142,7 @@ public class Think
     else if (0 <= (i+1) && (i+1) < 8 && 0 <= (j-2) && (j-2) < 8 && board[i+1][j-2] == -1)
     {
       Point p5 = new Point(i+1,j-2);
-      goNode = new LLnode(p5, base); //
+      goNode = new LLnode(p5, base);
       ls.push(goNode);
       board[goNode.get_x()][goNode.get_y()] = goNode.get_order_data();
       bs.push(board);
@@ -165,7 +151,7 @@ public class Think
     else if (0 <= (i-1) && (i-1) < 8 && 0 <= (j-2) && (j-2) < 8 && board[i-1][j-2] == -1)
     {
       Point p6 = new Point(i-1,j-2);
-      goNode = new LLnode(p6, base); //
+      goNode = new LLnode(p6, base);
       ls.push(goNode);
       board[goNode.get_x()][goNode.get_y()] = goNode.get_order_data();
       bs.push(board);
@@ -182,11 +168,7 @@ public class Think
     }
     else {
       goNode = new LLnode(base);
-
-//delete if use for multiple
-      System.out.println("Game Over Impossible to Solve, Well done!");
     }
     return goNode;
   } // end find move
-
 }
